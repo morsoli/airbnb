@@ -156,6 +156,16 @@ react-hot-toast 还提供了很多其他的配置选项，例如：
     icon：通知的图标，可以自定义。
     总之，react-hot-toast 是一个简单易用的通知组件库，可以帮助我们在页面中展示通知、警告和错误等信息。它提供了丰富的配置选项，可以根据需要自定义通知的样式和行为。使用 react-hot-toast 可以提高用户体验，减少用户的困惑和不满。
 
+## Prisma
+Prisma 是一个现代化的 ORM（对象关系映射）工具，它提供了一个类型安全的 API，用于与数据库进行交互。Prisma 支持多种数据库，包括 PostgreSQL、MySQL、SQLite 和 Microsoft SQL Server，可以用于构建各种类型的应用程序，包括 Web 应用程序、API、CLI 工具等。
+Prisma 的主要功能包括：
+  数据建模：使用 Prisma 定义数据模型，包括表、列、外键等，Prisma 将自动生成数据库迁移脚本，并确保数据模型和数据库的一致性和正确性。
+  数据访问：使用 Prisma 查询 API 可以轻松地进行 CRUD（创建、读取、更新和删除）操作，同时支持复杂的查询、过滤和排序等操作。
+  数据类型安全：Prisma 提供了强类型的 API，支持 TypeScript 和 JavaScript，可以在编译时捕获类型错误和其他错误，并在开发过程中提供代码补全和文档支持。
+  Prisma 还提供了许多其他功能，包括数据库连接池、事务管理、性能分析等，可以帮助开发人员更轻松地构建和维护数据库应用程序。
+
+在使用 Prisma 时，需要先安装 Prisma CLI 和 Prisma Client，然后定义数据模型、生成迁移脚本、执行迁移、生成 Prisma Client，最后使用 Prisma Client 进行数据访问。Prisma 还提供了许多工具和插件，可以帮助开发人员更轻松地使用 Prisma，例如 Prisma Studio、Prisma Migrate 等。
+
 ## 其他
 ### axios
 axios 是一个基于 Promise 的 HTTP 客户端，可以用于浏览器和 Node.js 环境中对 HTTP 请求进行封装和处理。
