@@ -4,7 +4,7 @@
 
 下载依赖包
 ```bash
-npm install -D
+npm install
 ```
 启动开发环境
 ```bash
@@ -172,3 +172,12 @@ axios 是一个基于 Promise 的 HTTP 客户端，可以用于浏览器和 Node
 
 ### react-icon
 react-icons 是一个基于 React 的图标库，包含了众多常用的图标，并且支持自定义图标。它提供了一个简单易用的 API，可以方便地在 React 应用中使用各种图标。
+
+### bcrypt
+使用 bcrypt 实现加密逻辑
+
+## 教程资源
+- [NextAuth.js 官方文档](https://authjs.dev/)
+- [Prisma 官方文档](https://www.prisma.io/docs)
+- [Next.js 应用开发实战](https://nextjs-in-action-cn.taonan.lu/)
+- [Next.js 小记](https://www.bilibili.com/read/cv20992052)
