@@ -2,8 +2,8 @@
 
 import axios from "axios";
 import { AiFillGithub } from "react-icons/ai";
-import { FcGoogle} from "react-icons/fc";
-import { useState, useCallback } from "react";
+import { FcGoogle } from "react-icons/fc";
+import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import {toast} from "react-hot-toast"
 import useRegisterModal from "@/app/hooks/useRegisterModal";
@@ -95,13 +95,13 @@ const RegisterModal = () => {
           <hr />
           <Button 
             outline 
-            label="使用 Google 登录"
+            label="使用 Google 注册"
             icon={FcGoogle}
             onClick={() => {}} 
           />
           <Button 
             outline 
-            label="使用 Github 登录"
+            label="使用 Github 注册"
             icon={AiFillGithub}
             onClick={()=>{}}
           />
