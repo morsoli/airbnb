@@ -8,6 +8,7 @@ import useRegisterModal from '@/app/hooks/useRegisterModal';
 import useLoginModal from '@/app/hooks/useLoginModal';
 import { SafeUser } from '@/app/types';
 import { signOut } from 'next-auth/react';
+import useRentModal from '@/app/hooks/useRentModal';
 
 interface UserMenuProps {
     currentUser?: SafeUser | null;
@@ -16,6 +17,7 @@ interface UserMenuProps {
  const UserMenu: React.FC<UserMenuProps> = ({currentUser}) => {
     const registerModal = useRegisterModal();
     const loginModal = useLoginModal();
+    const rentModal = useRentModal();
     const [isOpen, setIsOpen] = useState(false);
     /*
     定义了一个名为 isOpen 的状态变量和一个名为 toggleOpen 的回调函数，用于切换 isOpen 的值(下拉框点击展开，再点击收回)。
@@ -30,14 +32,15 @@ interface UserMenuProps {
         if (!currentUser){
             return loginModal.onOpen();
         }
-    },[currentUser, loginModal]);
+        rentModal.onOpen();
+    },[currentUser, loginModal, rentModal]);
  
     return (
         <div className="relative">
             <div className="flex flex-row items-center gap-3">
                 <div onClick={onRent} className="
                 hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer">
-                    主页
+                    在爱彼迎上出租您的家
                 </div>
                 <div onClick={toggleOpen} className="
                 p-4 md:py-1 md:px-1 border-[1px] border-neutral-200 flex flex-row items-center
@@ -55,11 +58,11 @@ interface UserMenuProps {
                             {
                                 currentUser? (
                                 <>
-                                <MenuItem onClick={()=>{}} label='旅行'/>
-                                <MenuItem onClick={()=>{}} label='收藏'/>
-                                <MenuItem onClick={()=>{}} label='订单'/>
-                                <MenuItem onClick={()=>{}} label='房源'/>
-                                <MenuItem onClick={()=>{}} label='主页'/>
+                                <MenuItem onClick={()=>{}} label='我的旅行'/>
+                                <MenuItem onClick={()=>{}} label='我的收藏'/>
+                                <MenuItem onClick={()=>{}} label='我的预订'/>
+                                <MenuItem onClick={()=>{}} label='我的房源'/>
+                                <MenuItem onClick={onRent} label='在爱彼迎上出租您的家'/>
                                 <hr />
                                 <MenuItem onClick={signOut} label='退出'/>
                                 </>
