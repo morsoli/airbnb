@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
 import { signIn } from 'next-auth/react';
 import { 
@@ -13,6 +13,7 @@ import { AiFillGithub } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 
 import useLoginModal from "@/app/hooks/useLoginModal";
+import useRegisterModal from "@/app/hooks/useRegisterModal";
 
 import Modal from "./Modal";
 import Input from "../inputs/Input";
@@ -22,6 +23,7 @@ import Button from "../Button";
 const LoginModal = () => {
   const router = useRouter();
   const loginModal = useLoginModal();
+  const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState(false);
 
   const { 
@@ -59,6 +61,11 @@ const LoginModal = () => {
       }
     });
   }
+
+  const toggle = useCallback(()=>{
+    loginModal.onClose();
+    registerModal.onOpen();
+  }, [loginModal, registerModal]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -104,7 +111,7 @@ const LoginModal = () => {
       <div className="text-neutral-500 text-center mt-4 font-light">
         <p>首次使用爱彼迎?
           <span 
-            onClick={()=>{}} 
+            onClick={toggle} 
             className="
               text-neutral-800
               cursor-pointer 

@@ -3,11 +3,12 @@
 import axios from "axios";
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { signIn } from 'next-auth/react';
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import {toast} from "react-hot-toast"
 import useRegisterModal from "@/app/hooks/useRegisterModal";
+import useLoginModal from "@/app/hooks/useLoginModal";
 import Modal from "./Modal";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
@@ -15,6 +16,7 @@ import Button from "../Button";
 
 const RegisterModal = () => {
     const registerModal = useRegisterModal();
+    const loginModle = useLoginModal()
     const [isLoading, setIsLoading] = useState(false);
     /*
     调用了 `useForm` Hook，并传入了一个泛型类型参数 `FieldValue`，用于指定表单数据的类型。
@@ -56,7 +58,13 @@ const RegisterModal = () => {
         .finally(() => {
           setIsLoading(false);
         })
-      }
+      };
+
+      const toggle = useCallback(()=>{
+        registerModal.onClose();
+        loginModle.onOpen();
+      },[loginModle, registerModal]);
+
       const bodyContent = (
         <div className="flex flex-col gap-4">
           <Heading
@@ -116,7 +124,7 @@ const RegisterModal = () => {
           >
             <p>已注册账号？
               <span 
-                onClick={()=>{}} 
+                onClick={toggle} 
                 className="
                   text-neutral-800
                   cursor-pointer 

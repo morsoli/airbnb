@@ -17,15 +17,25 @@ interface UserMenuProps {
     const registerModal = useRegisterModal();
     const loginModal = useLoginModal();
     const [isOpen, setIsOpen] = useState(false);
-
+    /*
+    定义了一个名为 isOpen 的状态变量和一个名为 toggleOpen 的回调函数，用于切换 isOpen 的值(下拉框点击展开，再点击收回)。
+    由于使用了 useCallback 钩子函数对 toggleOpen 进行了性能优化，所以可以提高组件的渲染性能。
+    (由于 toggleOpen 函数没有任何依赖项，所以只会在组件挂载时缓存一次，并在整个组件生命周期内共享该缓存的函数实例。)
+    */
     const toggleOpen = useCallback(
         ()=>{setIsOpen((value)=>!value);}, []
     );
+
+    const onRent = useCallback(()=>{
+        if (!currentUser){
+            return loginModal.onOpen();
+        }
+    },[currentUser, loginModal]);
  
     return (
         <div className="relative">
             <div className="flex flex-row items-center gap-3">
-                <div onClick={()=>{}} className="
+                <div onClick={onRent} className="
                 hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer">
                     主页
                 </div>
