@@ -1,10 +1,14 @@
 'use client';
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const Logo = () => {
+    const router = useRouter();
     return (
-    <Image alt="Logo"
+    <Image
+    onClick={()=>{router.push('/')}}
+    alt="Logo"
     className="md:blcok cursor-pointer"
     height="100" 
     width="100" 
