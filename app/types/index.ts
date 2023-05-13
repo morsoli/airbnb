@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { Listing, Reservation, User } from "@prisma/client";
 
 /* 
 这段代码定义了一个 `SafeUser` 类型，它是基于 `User` 类型进行定义，并使用 `Omit` 类型删除了 `User` 类型中的 `"createdAt"`, `"updatedAt"`, `"emailVerified"` 这三个属性。
@@ -10,4 +10,15 @@ export type SafeUser = Omit<User, "createdAt" | "updatedAt" | "emailVerified"> &
     createdAt: string;
     updatedAt: string;
     emailVerified: string|null;
+};
+
+export type SafeListing = Omit<Listing, "createdAt"> & {
+    createdAt: string;
+};
+
+export type SafeReservation = Omit<Reservation, "createdAt" | "startDate" | "endDate" | "listinf"> & {
+    createdAt: string;
+    startDate: string;
+    endDate: string;
+    listing: SafeListing;
 };
