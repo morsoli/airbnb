@@ -17,7 +17,7 @@ const Search = () => {
         >
         <div className="flex flex-row items-center justify-between">
         <div className="text-sm font-semibold px-6">
-            Anywhere
+            任何地方
         </div>
         <div className="
             hidden 
@@ -29,10 +29,10 @@ const Search = () => {
             flex-1 
             text-center
           ">
-        Any Week
+        任意一周
         </div>
         <div className="text-sm pl-6 pr-3 text-gray-600 flex flex-row items-center gap-3">
-            <div className="hidden sm:block ">Add Guests</div>
+            <div className="hidden sm:block ">添加房客</div>
             <div className="p-2 bg-rose-500 rounded-full text-white"><BiSearch size={18}/></div>
         </div>
         </div>

@@ -6,11 +6,14 @@ import { useMemo, useState } from "react";
 import Heading from "../Heading";
 import { categories } from "../navbar/Categories";
 import CategoryInput from "../inputs/CategoryInput";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import CountrySelect from "../inputs/CountrySelect";
-import Map from "../Map";
 import dynamic from "next/dynamic";
 import Counter from "../inputs/Counter";
+import Input from "../inputs/Input";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 enum STEPS {
     CATEGORY = 0,
@@ -23,7 +26,9 @@ enum STEPS {
 
 const RentModal=()=>{
     const rentModal = useRentModal();
+    const router = useRouter()
     const [step, setStep] = useState(STEPS.CATEGORY);
+    const [isLoading, setIsLoading] = useState(false);
     const {register, handleSubmit, setValue, watch, formState: {errors,}, reset} = useForm<FieldValues>({
         defaultValues: {
             category: '',
@@ -77,6 +82,27 @@ const RentModal=()=>{
         }
         return '回退';
     }, [step]);
+
+    const onSubmit: SubmitHandler<FieldValues> =(data) => {
+        if (step!==STEPS.PRICE){
+            return onNext();
+        }
+        setIsLoading(true);
+        axios.post('api/listings', data)
+        .then(()=>{
+            toast.success('房源发布成功！');
+            router.refresh();
+            reset();
+            setStep(STEPS.CATEGORY);
+            rentModal.onClose();
+        })
+        .catch(()=>{
+            toast.error('出错了！');
+        })
+        .finally(()=>{
+            setIsLoading(false);
+        })
+    }
 
     let bodyContent = (
         <div className="flex flex-col gap-8">
@@ -149,6 +175,9 @@ const RentModal=()=>{
               title="你会如何描述你的住所？"
               subtitle="简单而精炼的描述最佳！"
             />
+            <Input id="title" label="标题" disabled={isLoading} register={register} errors={errors} required/>
+            <hr />
+            <Input id="description" label="描述" disabled={isLoading} register={register} errors={errors} required/>
           </div>
         )
       }
@@ -157,9 +186,10 @@ const RentModal=()=>{
         bodyContent = (
           <div className="flex flex-col gap-8">
             <Heading
-              title="现在，设置您的价格"
+              title="设置您的房价"
               subtitle="您每晚收取多少费用？"
             />
+            <Input id="price" label="价格" formatPrice type="number" disabled={isLoading} register={register} errors={errors} required/>
           </div>
         )
       }
@@ -168,11 +198,11 @@ const RentModal=()=>{
         <Modal
         isOpen={rentModal.isOpen}
         onClose={rentModal.onClose}
-        onSubmit={onNext}
+        onSubmit={handleSubmit(onSubmit)}
         actionLabel={actionLabel}
         secondaryLable={secondaryLabel}
         secondaryAction={step===STEPS.CATEGORY?undefined:onBack}
-        title="在爱彼迎上出租您的家"
+        title="来爱彼迎发布房源"
         body = {bodyContent}
         />
     )

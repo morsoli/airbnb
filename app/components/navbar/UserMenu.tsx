@@ -40,7 +40,7 @@ interface UserMenuProps {
             <div className="flex flex-row items-center gap-3">
                 <div onClick={onRent} className="
                 hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer">
-                    在爱彼迎上出租您的家
+                    来爱彼迎发布房源
                 </div>
                 <div onClick={toggleOpen} className="
                 p-4 md:py-1 md:px-1 border-[1px] border-neutral-200 flex flex-row items-center
@@ -62,7 +62,7 @@ interface UserMenuProps {
                                 <MenuItem onClick={()=>{}} label='我的收藏'/>
                                 <MenuItem onClick={()=>{}} label='我的预订'/>
                                 <MenuItem onClick={()=>{}} label='我的房源'/>
-                                <MenuItem onClick={onRent} label='在爱彼迎上出租您的家'/>
+                                <MenuItem onClick={onRent} label='来爱彼迎发布房源'/>
                                 <hr />
                                 <MenuItem onClick={signOut} label='退出'/>
                                 </>

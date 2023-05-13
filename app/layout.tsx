@@ -13,8 +13,8 @@ const font = Nunito(
 )
 
 export const metadata = {
-  title: 'Aribnb',
-  description: 'Aribnb next app',
+  title: '爱彼迎',
+  description: '爱彼迎房源和房源出租',
 }
 
 export default async function RootLayout({
