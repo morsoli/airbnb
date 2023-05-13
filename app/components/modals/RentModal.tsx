@@ -5,6 +5,12 @@ import Modal from "./Modal";
 import { useMemo, useState } from "react";
 import Heading from "../Heading";
 import { categories } from "../navbar/Categories";
+import CategoryInput from "../inputs/CategoryInput";
+import { FieldValues, useForm } from "react-hook-form";
+import CountrySelect from "../inputs/CountrySelect";
+import Map from "../Map";
+import dynamic from "next/dynamic";
+import Counter from "../inputs/Counter";
 
 enum STEPS {
     CATEGORY = 0,
@@ -17,8 +23,40 @@ enum STEPS {
 
 const RentModal=()=>{
     const rentModal = useRentModal();
-
     const [step, setStep] = useState(STEPS.CATEGORY);
+    const {register, handleSubmit, setValue, watch, formState: {errors,}, reset} = useForm<FieldValues>({
+        defaultValues: {
+            category: '',
+            location: null,
+            guestCount: 1,
+            roomCount: 1,
+            bathroomCount: 1,
+            imageSrc: '',
+            price: 1,
+            title: '',
+            description: ''
+        }
+    });
+    /*
+    定义了一个 category 变量，使用 watch 方法监视了表单中名为 category 的控件的值。在这个示例中，category 变量将会随着表单控件的值的变化而更新。
+    还定义了一个 setCustomValue 函数，用于设置表单控件的值。该函数接受两个参数，第一个参数是表单控件的 id，第二个参数是要设置的值。在设置表单控件的值时，setCustomValue 函数还传入了一个选项对象，用于指定设置值的行为，包括是否进行验证、是否标记为已修改、是否标记为已触摸等选项。
+    */
+    const category = watch('category');
+    const location = watch('location');
+    const guestCount = watch('guestCount');
+    const roomCount = watch('roomCount');
+    const bathroomCount = watch('bathroomCount')
+
+    const Map = useMemo(()=>dynamic(()=>import('../Map'),{ssr:false}),[location])
+
+    const setCustomValue = (id: string, value: any) =>{
+        setValue(id, value, {
+            shouldValidate: true,
+            shouldDirty: true,
+            shouldTouch: true,
+        })
+    }
+
     const onBack = ()=>{
         setStep((value)=>value-1);
     }
@@ -47,19 +85,90 @@ const RentModal=()=>{
                 {
                     categories.map((item)=>(
                         <div key={item.label} className="col-span-1">
-                            {item.label}
+                            <CategoryInput
+                            onclick = {(category)=>setCustomValue('category', category)}
+                            key = {item.label}
+                            selected = {category === item.label}
+                            label = {item.label}
+                            icon = {item.icon}
+                            />
                         </div>
                     ))
                 }
             </div>
         </div>
     )
+    
+    if (step === STEPS.LOACATION){
+        bodyContent = (
+            <>
+            <div className="flex flex-col gap-8">
+                <Heading title="您的住所位于哪里？" subtitle="帮客人找到你"/>
+                <div className="z-10 top-0">
+                <CountrySelect value={location} onChange={(value)=>setCustomValue('location', value)}/>
+                </div>
+                <div className="z-0">
+                <Map center={location?.latlng} />
+                </div>
+            </div>
+            </>
+        )
+    }
+
+    if (step === STEPS.INFO) {
+        bodyContent = (
+          <div className="flex flex-col gap-8">
+            <Heading
+              title="分享一些关于您的住所的基本信息"
+              subtitle="您住所有哪些设施？"
+            />
+          <Counter title="租客数" subtitle="可以接待多少位租客？" value={guestCount} onChange={(value)=>setCustomValue('guestCount', value)}/>
+          <hr />
+          <Counter title="房间数" subtitle="有多少个房间？" value={roomCount} onChange={(value)=>setCustomValue('roomCount', value)}/>
+          <hr />
+          <Counter title="浴室数" subtitle="有多少间浴室？" value={bathroomCount} onChange={(value)=>setCustomValue('bathroomCount', value)}/>
+          </div>
+        )
+    }
+    
+    if (step === STEPS.IMAGES) {
+        bodyContent = (
+          <div className="flex flex-col gap-8">
+            <Heading
+              title="添加您的住所照片"
+              subtitle="向客人展示您的住所是什么样子的！"
+            />
+          </div>
+        )
+    }
+
+    if (step === STEPS.DESCRIPTION) {
+        bodyContent = (
+          <div className="flex flex-col gap-8">
+            <Heading
+              title="你会如何描述你的住所？"
+              subtitle="简单而精炼的描述最佳！"
+            />
+          </div>
+        )
+      }
+
+      if (step === STEPS.PRICE) {
+        bodyContent = (
+          <div className="flex flex-col gap-8">
+            <Heading
+              title="现在，设置您的价格"
+              subtitle="您每晚收取多少费用？"
+            />
+          </div>
+        )
+      }
 
     return (
         <Modal
         isOpen={rentModal.isOpen}
         onClose={rentModal.onClose}
-        onSubmit={rentModal.onClose}
+        onSubmit={onNext}
         actionLabel={actionLabel}
         secondaryLable={secondaryLabel}
         secondaryAction={step===STEPS.CATEGORY?undefined:onBack}
