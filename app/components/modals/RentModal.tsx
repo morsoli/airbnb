@@ -148,7 +148,7 @@ const RentModal=()=>{
               title="分享一些关于您的住所的基本信息"
               subtitle="您住所有哪些设施？"
             />
-          <Counter title="租客数" subtitle="可以接待多少位租客？" value={guestCount} onChange={(value)=>setCustomValue('guestCount', value)}/>
+          <Counter title="房客数" subtitle="可以接待多少位租客？" value={guestCount} onChange={(value)=>setCustomValue('guestCount', value)}/>
           <hr />
           <Counter title="房间数" subtitle="有多少个房间？" value={roomCount} onChange={(value)=>setCustomValue('roomCount', value)}/>
           <hr />
