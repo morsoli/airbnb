@@ -9,6 +9,7 @@ import useCountries from "@/app/hooks/useCountry";
 import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
 
 import Button from "../Button";
+import HeartButton from "../HeartButton";
 
 interface ListingCardProps {
   data: SafeListing;
@@ -17,7 +18,7 @@ interface ListingCardProps {
   disabled?: boolean;
   actionLabel?: string;
   actionId?: string;
-  currentUser?: SafeUser | null
+  currentUser?: SafeUser | null;
 };
 
 const ListingCard: React.FC<ListingCardProps> = ({
@@ -91,6 +92,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
             src={data.imageSrc}
             alt="Listing"
           />
+          <div className="absolute top-3 right-3">
+            <HeartButton listingId={data.id} currentUser={currentUser}/>
+          </div>
         </div>
         <div className="font-semibold text-lg">
           {location?.region}, {location?.label}
@@ -100,10 +104,10 @@ const ListingCard: React.FC<ListingCardProps> = ({
         </div>
         <div className="flex flex-row items-center gap-1">
           <div className="font-semibold">
-            ¥ {price}
+            {price} 
           </div>
           {!reservation && (
-            <div className="font-light">每晚</div>
+            <div className="font-light">元/晚</div>
           )}
         </div>
         {onAction && actionLabel && (

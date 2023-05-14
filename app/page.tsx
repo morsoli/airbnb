@@ -8,7 +8,7 @@ import ListingCard from "./components/listings/ListingCard";
 export default async function Home() {
   const isEmpty = false;
   const listings = await getListings();
-  const currenUser = getCurrentUser();
+  const currentUser = await getCurrentUser();
 
   if (isEmpty){
     return (
@@ -26,7 +26,7 @@ export default async function Home() {
           {listings.map((listing: any)=>{
             return (
               <div>
-                <ListingCard  key={listing.id} data={listing} currenUser={currenUser}/>
+                <ListingCard  key={listing.id} data={listing} currentUser={currentUser}/>
               </div>
             );
           })}
