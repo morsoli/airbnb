@@ -5,19 +5,19 @@ import axios from "axios";
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { SafeReservation, SafeUser } from "@/app/types";
+import { SafePropery, SafeUser } from "@/app/types";
 
 import Heading from "@/app/components/Heading";
 import Container from "@/app/components/Container";
 import ListingCard from "@/app/components/listings/ListingCard";
 
-interface ReservationsClientProps {
-  reservations: SafeReservation[],
+interface PropertiesClientProps {
+  properies: SafePropery[],
   currentUser?: SafeUser | null,
 }
 
-const ReservationsClient: React.FC<ReservationsClientProps> = ({
-  reservations,
+const PropertiesClient: React.FC<PropertiesClientProps> = ({
+  properies,
   currentUser
 }) => {
   const router = useRouter();
@@ -26,9 +26,9 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
   const onCancel = useCallback((id: string) => {
     setDeletingId(id);
 
-    axios.delete(`/api/reservations/${id}`)
+    axios.delete(`/api/listings/${id}`)
     .then(() => {
-      toast.success('取消成功！');
+      toast.success('下架成功！');
       router.refresh();
     })
     .catch((error) => {
@@ -42,8 +42,8 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
   return (
     <Container>
       <Heading
-        title="被预订列表"
-        subtitle="被租客预订的房间信息"
+        title="发布房源"
+        subtitle="您发布的房间信息"
       />
       <div 
         className="
@@ -58,15 +58,14 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
           gap-8
         "
       >
-        {reservations.map((reservation: any) => (
+        {properies.map((properies: any) => (
           <ListingCard
-            key={reservation.id}
-            data={reservation.listing}
-            reservation={reservation}
-            actionId={reservation.id}
+            key={properies.id}
+            data={properies}
+            actionId={properies.id}
             onAction={onCancel}
-            disabled={deletingId === reservation.id}
-            actionLabel="取消租客预订"
+            disabled={deletingId === properies.id}
+            actionLabel="下架房源"
             currentUser={currentUser}
           />
         ))}
@@ -75,4 +74,4 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
    );
 }
  
-export default ReservationsClient;
+export default PropertiesClient;

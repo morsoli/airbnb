@@ -61,9 +61,9 @@ interface UserMenuProps {
                                 currentUser? (
                                 <>
                                 <MenuItem onClick={()=>router.push('/trips')} label='我的旅行计划'/>
-                                <MenuItem onClick={()=>{}} label='我喜欢的房间'/>
+                                <MenuItem onClick={()=>router.push('/favorites')} label='我喜欢的房间'/>
                                 <MenuItem onClick={()=>router.push('/reservations')} label='我的房源预订'/>
-                                <MenuItem onClick={()=>{}} label='我发布的房源'/>
+                                <MenuItem onClick={()=>router.push('/properties')} label='我发布的房源'/>
                                 <MenuItem onClick={onRent} label='来爱彼迎发布房源'/>
                                 <hr />
                                 <MenuItem onClick={signOut} label='退出'/>

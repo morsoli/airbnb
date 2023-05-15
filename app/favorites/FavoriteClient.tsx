@@ -5,19 +5,19 @@ import axios from "axios";
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { SafeReservation, SafeUser } from "@/app/types";
+import { SafeFavorite, SafeListing, SafeReservation, SafeUser } from "@/app/types";
 
 import Heading from "@/app/components/Heading";
 import Container from "@/app/components/Container";
 import ListingCard from "@/app/components/listings/ListingCard";
 
-interface ReservationsClientProps {
-  reservations: SafeReservation[],
+interface FavoriteClientProps {
+  favorites: SafeFavorite[],
   currentUser?: SafeUser | null,
 }
 
-const ReservationsClient: React.FC<ReservationsClientProps> = ({
-  reservations,
+const FavoriteClient: React.FC<FavoriteClientProps> = ({
+  favorites,
   currentUser
 }) => {
   const router = useRouter();
@@ -26,7 +26,7 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
   const onCancel = useCallback((id: string) => {
     setDeletingId(id);
 
-    axios.delete(`/api/reservations/${id}`)
+    axios.delete(`/api/favorites/${id}`)
     .then(() => {
       toast.success('取消成功！');
       router.refresh();
@@ -42,8 +42,8 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
   return (
     <Container>
       <Heading
-        title="被预订列表"
-        subtitle="被租客预订的房间信息"
+        title="旅行计划"
+        subtitle="你曾经去过哪里，以及你将要去哪里"
       />
       <div 
         className="
@@ -58,15 +58,10 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
           gap-8
         "
       >
-        {reservations.map((reservation: any) => (
+        {favorites.map((favorite: any) => (
           <ListingCard
-            key={reservation.id}
-            data={reservation.listing}
-            reservation={reservation}
-            actionId={reservation.id}
-            onAction={onCancel}
-            disabled={deletingId === reservation.id}
-            actionLabel="取消租客预订"
+            data={favorite}
+            key={favorite.id}
             currentUser={currentUser}
           />
         ))}
@@ -75,4 +70,4 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
    );
 }
  
-export default ReservationsClient;
+export default FavoriteClient;

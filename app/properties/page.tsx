@@ -1,10 +1,11 @@
+import { getPriority } from "os";
 import { getCurrentUser } from "../actions/getCurrentUser"
-import getReservations from "../actions/getReservations";
 import ClientOnly from "../components/ClientOnly";
 import EmptyState from "../components/EmptyState";
-import ReservationsClient from "./ReservationsClient";
+import PropertiesClient from "./PropertiesPage";
+import getProperies from "../actions/getProperies";
 
-const ReservationPage = async ()=>{
+const PropertiesPage = async ()=>{
     const currentUser = await getCurrentUser();
     if (!currentUser){
         return (
@@ -16,16 +17,14 @@ const ReservationPage = async ()=>{
             </ClientOnly>
         )
     }
-    const reservation = await getReservations({
-        authorId: currentUser.id
-    })
 
-    if (reservation.length === 0){
+    const properties = await getProperies();
+    if (properties.length === 0){
         return (
             <ClientOnly>
                 <EmptyState 
-                title="未被预订"
-                subtitle="看起来你发布的房源没有被预订"
+                title="未发布房源"
+                subtitle="看起来你还没有发布过房源"
                 />
             </ClientOnly>
         )
@@ -33,8 +32,8 @@ const ReservationPage = async ()=>{
 
     return (
         <ClientOnly>
-            <ReservationsClient
-            reservations={reservation}
+            <PropertiesClient
+            properies={properties}
             currentUser={currentUser}
             />
         </ClientOnly>
@@ -42,4 +41,4 @@ const ReservationPage = async ()=>{
 
 }
 
-export default ReservationPage;  
+export default PropertiesPage;  

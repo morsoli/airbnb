@@ -1,11 +1,12 @@
 import { getCurrentUser } from "../actions/getCurrentUser"
-import getReservations from "../actions/getReservations";
+import getFavorites from "../actions/getFavorites";
 import ClientOnly from "../components/ClientOnly";
 import EmptyState from "../components/EmptyState";
-import ReservationsClient from "./ReservationsClient";
+import FavoriteClient from "./FavoriteClient";
 
-const ReservationPage = async ()=>{
+const FavoritePage = async ()=>{
     const currentUser = await getCurrentUser();
+    const favorites = await getFavorites();
     if (!currentUser){
         return (
             <ClientOnly>
@@ -16,16 +17,13 @@ const ReservationPage = async ()=>{
             </ClientOnly>
         )
     }
-    const reservation = await getReservations({
-        authorId: currentUser.id
-    })
 
-    if (reservation.length === 0){
+    if (favorites.length === 0){
         return (
             <ClientOnly>
                 <EmptyState 
-                title="未被预订"
-                subtitle="看起来你发布的房源没有被预订"
+                title="未收藏"
+                subtitle="你看起来没有收藏任何房间"
                 />
             </ClientOnly>
         )
@@ -33,8 +31,8 @@ const ReservationPage = async ()=>{
 
     return (
         <ClientOnly>
-            <ReservationsClient
-            reservations={reservation}
+            <FavoriteClient 
+            favorites={favorites}
             currentUser={currentUser}
             />
         </ClientOnly>
@@ -42,4 +40,4 @@ const ReservationPage = async ()=>{
 
 }
 
-export default ReservationPage;  
+export default FavoritePage;  

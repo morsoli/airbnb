@@ -22,3 +22,7 @@ export type SafeReservation = Omit<Reservation, "createdAt" | "startDate" | "end
     endDate: string;
     listing: SafeListing;
 };
+
+export type SafeFavorite = SafeListing;
+
+export type SafePropery = SafeListing;
