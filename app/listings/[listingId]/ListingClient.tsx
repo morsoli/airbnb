@@ -80,7 +80,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
         router.push('/trips');
       })
       .catch(() => {
-        toast.error('出错了.');
+        toast.error('预订出错了.');
       })
       .finally(() => {
         setIsLoading(false);

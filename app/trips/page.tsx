@@ -25,7 +25,7 @@ const TripsPage = async ()=>{
             <ClientOnly>
                 <EmptyState 
                 title="未发现旅程"
-                subtitle="你看起来还未预订任何旅程"
+                subtitle="你看起来还未预订任何房间"
                 />
             </ClientOnly>
         )

@@ -97,7 +97,7 @@ const RentModal=()=>{
             rentModal.onClose();
         })
         .catch(()=>{
-            toast.error('出错了！');
+            toast.error('房源发布出错了！');
         })
         .finally(()=>{
             setIsLoading(false);

@@ -51,9 +51,10 @@ const RegisterModal = () => {
         .then(() => {
           toast.success('注册成功!');
           registerModal.onClose();
+          loginModle.onOpen();
         })
         .catch(() => {
-          toast.error("出错了!");
+          toast.error("注册出错了!");
         })
         .finally(() => {
           setIsLoading(false);
