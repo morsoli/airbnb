@@ -1,6 +1,6 @@
 'use client';
 
-import Range from "react-date-range";
+import { Range } from "react-date-range";
 import qs from "query-string";
 
 import useSearchModal from "@/app/hooks/useSearchModal";

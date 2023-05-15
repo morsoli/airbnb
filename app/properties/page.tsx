@@ -1,9 +1,8 @@
-import { getPriority } from "os";
 import { getCurrentUser } from "../actions/getCurrentUser"
 import ClientOnly from "../components/ClientOnly";
 import EmptyState from "../components/EmptyState";
 import PropertiesClient from "./PropertiesPage";
-import getProperies from "../actions/getProperies";
+import getListings from "../actions/getListings";
 
 const PropertiesPage = async ()=>{
     const currentUser = await getCurrentUser();
@@ -18,7 +17,7 @@ const PropertiesPage = async ()=>{
         )
     }
 
-    const properties = await getProperies();
+    const properties = await getListings({ userId: currentUser.id });
     if (properties.length === 0){
         return (
             <ClientOnly>

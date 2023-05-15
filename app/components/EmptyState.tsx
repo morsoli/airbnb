@@ -6,8 +6,8 @@ import Heading from "./Heading";
 import Button from "./Button";
 
 interface EmptyStateProps {
-    title: string;
-    subtitle: string;
+    title?: string;
+    subtitle?: string;
     showReset?: boolean;
 }
 

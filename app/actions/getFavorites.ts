@@ -20,7 +20,7 @@ export default async function getFavorites() {
             createdAt: item.createdAt.toISOString(),
         }));
 
-        return saveFavoritest
+        return saveFavoritest;
     }
     catch(error:any){
         throw new Error(error);

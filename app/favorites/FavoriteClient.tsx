@@ -1,11 +1,4 @@
-'use client';
-
-import { toast } from "react-hot-toast";
-import axios from "axios";
-import { useCallback, useState } from "react";
-import { useRouter } from "next/navigation";
-
-import { SafeFavorite, SafeListing, SafeReservation, SafeUser } from "@/app/types";
+import { SafeFavorite, SafeUser } from "@/app/types";
 
 import Heading from "@/app/components/Heading";
 import Container from "@/app/components/Container";
@@ -20,25 +13,6 @@ const FavoriteClient: React.FC<FavoriteClientProps> = ({
   favorites,
   currentUser
 }) => {
-  const router = useRouter();
-  const [deletingId, setDeletingId] = useState('');
-
-  const onCancel = useCallback((id: string) => {
-    setDeletingId(id);
-
-    axios.delete(`/api/favorites/${id}`)
-    .then(() => {
-      toast.success('取消成功！');
-      router.refresh();
-    })
-    .catch((error) => {
-      toast.error(error?.response?.data?.error)
-    })
-    .finally(() => {
-      setDeletingId('');
-    })
-  }, [router]);
-
   return (
     <Container>
       <Heading
