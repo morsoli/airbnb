@@ -1,17 +1,20 @@
 import { getCurrentUser } from "./actions/getCurrentUser";
-import getListings from "./actions/getListings";
+import getListings, { ListingsParams } from "./actions/getListings";
 import ClientOnly from "./components/ClientOnly"
 import Container from "./components/Container"
 import EmptyState from "./components/EmptyState";
 import ListingCard from "./components/listings/ListingCard";
 import { SafeListing } from "./types";
 
-export default async function Home() {
-  const isEmpty = false;
-  const listings = await getListings();
+interface HomeProps {
+  searchParams: ListingsParams
+};
+
+export default async function Home ({searchParams}: HomeProps) {
+  const listings = await getListings(searchParams);
   const currentUser = await getCurrentUser();
 
-  if (isEmpty){
+  if (listings.length === 0){
     return (
       <ClientOnly>
         <EmptyState showReset/>
